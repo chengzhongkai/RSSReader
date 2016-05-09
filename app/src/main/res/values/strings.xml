@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RSS Reader</string>
+    <string name="enter_message">URL eingeben</string>
+    <string name="button_show">Feeds anzeigen</string>
+    <string name="rss_title">Titel</string>
+    <string name="rss_content">Inhalt</string>
+    <string name="feeds_loaded">Feeds wurden erfolgreich geladen.</string>
+    <string name="feed_loading">RSS Feeds werden geladen.</string>
+    <string name="feeds_not_loaded">Es ist ein Fehler aufgetreten. Feeds wurden nicht geladen.</string>
+</resources>
