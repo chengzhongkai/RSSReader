@@ -103,10 +103,10 @@ public class MainActivity extends Activity {
             String pubDate = dateFormat.format(cal.getTime());
 
             // performance-2do: use the ViewHolder pattern
-            TextView titleText = (TextView) findViewById(id.feeds_title);
+            TextView titleText = (TextView) view.findViewById(id.feeds_title);
             String text = title + ", erschienen am " + pubDate + "\n";
             titleText.setText(text);
-            TextView contentText = (TextView) findViewById(id.feeds_content);
+            TextView contentText = (TextView) view.findViewById(id.feeds_content);
             contentText.setText(description);
 
             Log.d("RSSCursorAdapter", "Content bound");
