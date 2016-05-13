@@ -21,7 +21,7 @@ import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_TABLE_TYPE;
 /**
  * RSS Feed provider which encapsulates basic provider methods for the RSS feeds table.
  *
- * @author u221867
+ * @author Kerem Adigüzel
  * @since 06.05.2016
  */
 public class RSSFeedProvider extends ContentProvider {

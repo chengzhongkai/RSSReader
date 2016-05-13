@@ -7,7 +7,7 @@ import ch.sbb.adiguzaf.rssreader.RSS2Constants;
 /**
  * The contract class for the feed provider.
  *
- * @author u221867
+ * @author Kerem Adigüzel
  * @since 08.05.2016
  */
 public final class FeedsContract {

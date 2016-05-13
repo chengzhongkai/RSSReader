@@ -14,7 +14,7 @@ import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_TABLE;
 /**
  * The database helper object to facilitate database related management tasks.
  *
- * @author u221867
+ * @author Kerem Adigüzel
  * @since 06.05.2016
  */
 final class MainDatabaseHelper extends SQLiteOpenHelper {
