@@ -7,4 +7,5 @@
     <string name="feeds_loaded">Feeds wurden erfolgreich geladen.</string>
     <string name="feed_loading">RSS Feeds werden geladen.</string>
     <string name="feeds_not_loaded">Es ist ein Fehler aufgetreten. Feeds wurden nicht geladen.</string>
+    <string name="published_on">"Erschienen am "</string>
 </resources>
