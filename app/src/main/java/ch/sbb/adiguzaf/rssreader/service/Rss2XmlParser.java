@@ -35,7 +35,7 @@ import static java.util.Locale.ENGLISH;
  * @author Kerem Adıgüzel
  * @since 13.05.2016
  */
-public class Rss2XmlParser {
+class Rss2XmlParser {
 
     private static final String DATE_FORMAT_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
     private static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN, ENGLISH);

@@ -12,8 +12,8 @@ import ch.sbb.adiguzaf.rssreader.provider.FeedsContract;
 
 class MainActivityLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private Context context;
-    private CursorAdapter cursorAdapter;
+    private final Context context;
+    private final CursorAdapter cursorAdapter;
 
     public MainActivityLoaderCallback(Context context, CursorAdapter cursorAdapter) {
         this.context = context;

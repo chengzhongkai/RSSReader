@@ -12,10 +12,10 @@ import ch.sbb.adiguzaf.rssreader.RSS2Constants;
  */
 public final class FeedsContract {
     static final String AUTHORITY = "ch.sbb.adiguzaf.rssreader.provider";
+    private static final String CONTENT_BASE = String.format("content://%s/", AUTHORITY);
 
     // since Android is on a linux like system, everything is case sensitive
     public static final String FEEDS_TABLE = "feeds";
-    public static final String CONTENT_BASE = String.format("content://%s/", AUTHORITY);
     public static final Uri FEEDS_PROVIDER_URI = Uri.parse(CONTENT_BASE + FEEDS_TABLE);
     public static final Uri FEEDS_PROVIDER_ID_URI = Uri.parse(CONTENT_BASE + FEEDS_TABLE + "/#");
 

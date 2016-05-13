@@ -21,7 +21,7 @@ import static ch.sbb.adiguzaf.rssreader.R.string;
 class RSSCursorAdapter extends CursorAdapter {
 
     private static final String mName = RSSCursorAdapter.class.getSimpleName();
-    private DateFormat dateFormat = DateFormat.getDateTimeInstance();
+    private final DateFormat dateFormat = DateFormat.getDateTimeInstance();
 
     // the ViewHolder pattern is used to avoid repeated resource lookups
     private static class ViewHolder {
