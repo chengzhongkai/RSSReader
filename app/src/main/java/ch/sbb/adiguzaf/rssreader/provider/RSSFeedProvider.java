@@ -31,7 +31,7 @@ import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_TABLE_TYPE;
  */
 public class RSSFeedProvider extends ContentProvider {
 
-    private static final String mName = RSSFeedProvider.class.getSimpleName();
+    private static final String className = RSSFeedProvider.class.getSimpleName();
 
     private static final int FEEDS_BASE = 100;
     private static final int FEEDS_COLUMN_ID = 101;
@@ -95,7 +95,7 @@ public class RSSFeedProvider extends ContentProvider {
             db.setTransactionSuccessful();
             getContext().getContentResolver().notifyChange(FEEDS_PROVIDER_URI, null);
         } catch (Exception ex) {
-            Log.e(mName, "Bulk insert failed!", ex);
+            Log.e(className, "Bulk insert failed!", ex);
         } finally {
             db.endTransaction();
         }

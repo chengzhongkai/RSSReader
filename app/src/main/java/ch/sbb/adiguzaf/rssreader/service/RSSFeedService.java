@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -21,16 +22,16 @@ import ch.sbb.adiguzaf.rssreader.provider.FeedsContract;
 
 public class RSSFeedService extends IntentService {
 
-    private static final String mName = RSSFeedService.class.getSimpleName();
+    private static final String className = RSSFeedService.class.getSimpleName();
 
     public RSSFeedService() {
-        super(mName);
+        super(className);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         String address = intent.getStringExtra(MainActivity.EXTRA_RSS_URL);
-        Log.d(mName, "Address is: " + address);
+        Log.d(className, "Address is: " + address);
 
         // make sure, old entries are cleared in db
         ContentResolver contentResolver = getContentResolver();
@@ -41,12 +42,14 @@ public class RSSFeedService extends IntentService {
             ContentValues[] contentValuesArray = rss2XmlParser.getFeeds(getInputStream(address));
 
             contentResolver.bulkInsert(FeedsContract.FEEDS_PROVIDER_URI, contentValuesArray);
-            Log.d(mName, "Feeds are inserted: " + Arrays.toString(contentValuesArray));
+            Log.d(className, "Feeds are inserted: " + Arrays.toString(contentValuesArray));
 
             showToast(R.string.feeds_loaded);
 
+        } catch (MalformedURLException e) {
+            showToast(R.string.url_wrong);
         } catch (Exception e) {
-            Log.e(mName, "an error occurred", e);
+            Log.e(className, e.getMessage(), e);
             showToast(R.string.feeds_not_loaded);
         }
     }
