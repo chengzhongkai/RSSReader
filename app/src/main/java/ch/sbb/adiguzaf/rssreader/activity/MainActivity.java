@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         EditText urlTextObject = (EditText) findViewById(id.rssUrl);
         String url = urlTextObject.getText().toString();
 
-        if ("".equals(url)) { // use standard URL
+        if ("".equals(url)) {
             url = STANDARD_URL;
         }
 

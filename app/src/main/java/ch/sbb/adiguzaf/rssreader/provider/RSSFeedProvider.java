@@ -8,11 +8,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.AUTHORITY;
+import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_COLUMN_DESCRIPTION;
+import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_COLUMN_LINK;
 import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_COLUMN_PUBLISHED_DATE;
+import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_COLUMN_TITLE;
 import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_ITEM_TYPE;
 import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_PROVIDER_URI;
 import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_TABLE;
@@ -21,20 +26,27 @@ import static ch.sbb.adiguzaf.rssreader.provider.FeedsContract.FEEDS_TABLE_TYPE;
 /**
  * RSS Feed provider which encapsulates basic provider methods for the RSS feeds table.
  *
- * @author Kerem Adigüzel
+ * @author Kerem Adıgüzel
  * @since 06.05.2016
  */
 public class RSSFeedProvider extends ContentProvider {
 
+    private static final String mName = RSSFeedProvider.class.getSimpleName();
+
     private static final int FEEDS_BASE = 100;
     private static final int FEEDS_COLUMN_ID = 101;
-
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sURIMatcher.addURI(AUTHORITY, FEEDS_TABLE, FEEDS_BASE);
         sURIMatcher.addURI(AUTHORITY, FEEDS_TABLE + "/#", FEEDS_COLUMN_ID);
     }
+
+    private static final String DEFAULT_SORT_ORDER = FEEDS_COLUMN_PUBLISHED_DATE + " DESC";
+    private static final String sqlInsertStatement = String.format(
+            "Insert or Replace into %s (%s, %s, %s, %s) values(?,?,?,?)",
+            FEEDS_TABLE, FEEDS_COLUMN_TITLE, FEEDS_COLUMN_DESCRIPTION, FEEDS_COLUMN_LINK,
+            FEEDS_COLUMN_PUBLISHED_DATE);
 
     private MainDatabaseHelper dbHelper;
     private SQLiteDatabase db; // Once opened successfully, the database is cached by the Android OS
@@ -62,6 +74,35 @@ public class RSSFeedProvider extends ContentProvider {
     }
 
     @Override
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+        db = dbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            final SQLiteStatement sqLiteStatement = db.compileStatement(sqlInsertStatement);
+
+            for (ContentValues value : values) {
+                sqLiteStatement.bindAllArgsAsStrings(
+                        new String[]{
+                                value.getAsString(FEEDS_COLUMN_TITLE),
+                                value.getAsString(FEEDS_COLUMN_DESCRIPTION),
+                                value.getAsString(FEEDS_COLUMN_LINK),
+                                value.getAsString(FEEDS_COLUMN_PUBLISHED_DATE)
+                        }
+                );
+                sqLiteStatement.executeInsert();
+            }
+
+            db.setTransactionSuccessful();
+            getContext().getContentResolver().notifyChange(FEEDS_PROVIDER_URI, null);
+        } catch (Exception ex) {
+            Log.e(mName, "Bulk insert failed!", ex);
+        } finally {
+            db.endTransaction();
+        }
+        return values.length;
+    }
+
+    @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         db = dbHelper.getWritableDatabase();
@@ -80,8 +121,7 @@ public class RSSFeedProvider extends ContentProvider {
         }
 
         if (sortOrder == null || "".equals(sortOrder)) {
-            // By default sort on publication dates
-            sortOrder = FEEDS_COLUMN_PUBLISHED_DATE;
+            sortOrder = DEFAULT_SORT_ORDER;
         }
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         c.setNotificationUri(getContext().getContentResolver(), uri);

@@ -29,12 +29,33 @@ import static ch.sbb.adiguzaf.rssreader.RSS2Constants.ITEM_TAG;
 import static ch.sbb.adiguzaf.rssreader.RSS2Constants.ITEM_TITLE_TAG;
 import static java.util.Locale.ENGLISH;
 
+/**
+ * This class is responsible for parsing a given input stream according to the RSS 2.0 protocol.
+ *
+ * @author Kerem Adıgüzel
+ * @since 13.05.2016
+ */
 public class Rss2XmlParser {
 
     private static final String DATE_FORMAT_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
     private static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN, ENGLISH);
 
-    public List<ContentValues> getFeeds(InputStream inputStream) throws IOException, SAXException,
+    /**
+     * Reads the input stream and processes the RSS feeds and stores them into an array, such that
+     * they can be inserted into a database or used otherwise. The following values are stored into
+     * a single <tt>ContentValues</tt> object with the corresponding column names from
+     * {@link FeedsContract}:
+     * <ul>
+     * <li>Title
+     * <li>Published Date (assuming the format is as in {@link #DATE_FORMAT_PATTERN})
+     * <li>Link
+     * <li>Description
+     * </ul>
+     *
+     * @param inputStream the input stream containing the rss feeds
+     * @return an array of <tt>ContentValues</tt> objects, containing the single RSS feed items.
+     */
+    public ContentValues[] getFeeds(InputStream inputStream) throws IOException, SAXException,
             ParserConfigurationException, ParseException {
         NodeList channelChildNodes = getChannelChildNodes(inputStream);
 
@@ -46,7 +67,7 @@ public class Rss2XmlParser {
                 contentValuesList.add(processRSSItem(item));
             }
         }
-        return contentValuesList;
+        return contentValuesList.toArray(new ContentValues[contentValuesList.size()]);
     }
 
     private NodeList getChannelChildNodes(InputStream inputStream)

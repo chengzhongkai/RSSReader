@@ -20,6 +20,8 @@ import static ch.sbb.adiguzaf.rssreader.R.layout;
 
 class RSSCursorAdapter extends CursorAdapter {
 
+    private static final String mName = RSSCursorAdapter.class.getSimpleName();
+
     public RSSCursorAdapter(Context context) {
         super(context, null, 0);
     }
@@ -43,13 +45,13 @@ class RSSCursorAdapter extends CursorAdapter {
         DateFormat dateFormat = DateFormat.getDateTimeInstance();
         String pubDate = dateFormat.format(cal.getTime());
 
-        // performance-2do: use the ViewHolder pattern
+        // TODO: use the ViewHolder pattern for performance
         TextView titleText = (TextView) view.findViewById(id.feeds_title);
         String text = title + ", erschienen am " + pubDate + "\n";
         titleText.setText(text);
         TextView contentText = (TextView) view.findViewById(id.feeds_content);
         contentText.setText(description);
 
-        Log.d("RSSCursorAdapter", "Content bound");
+        Log.d(mName, "Content bound");
     }
 }
