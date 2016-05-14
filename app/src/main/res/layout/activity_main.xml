@@ -24,11 +24,9 @@
             android:text="@string/button_show" />
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rssList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <include layout="@layout/item_feeds" />
 
 </LinearLayout>
