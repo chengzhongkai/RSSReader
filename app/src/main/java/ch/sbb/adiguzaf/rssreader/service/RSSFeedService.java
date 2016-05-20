@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 import ch.sbb.adiguzaf.rssreader.R;
-import ch.sbb.adiguzaf.rssreader.activity.MainActivity;
+import ch.sbb.adiguzaf.rssreader.activity.UrlReaderActivity;
 import ch.sbb.adiguzaf.rssreader.provider.FeedsContract;
 
 public class RSSFeedService extends IntentService {
@@ -30,7 +30,7 @@ public class RSSFeedService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String address = intent.getStringExtra(MainActivity.EXTRA_RSS_URL);
+        String address = intent.getStringExtra(UrlReaderActivity.EXTRA_RSS_URL);
         Log.d(className, "Address is: " + address);
 
         // make sure, old entries are cleared in db

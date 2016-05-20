@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- showAsAction="ifRoom" means, show as an action button in the toolbar if possible
+         Icon is taken from the material design webpage -->
+    <item
+        android:id="@+id/action_url"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/action_typeUrl"
+        app:showAsAction="ifRoom" />
+
+    <!-- Settings, should always be in the overflow -->
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+</menu>

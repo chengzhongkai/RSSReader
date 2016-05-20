@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:fullBackupContent="false"
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -18,16 +18,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.sbb.adiguzaf.rssreader.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.UrlReaderActivity"
+            android:label="@string/title_activity_url_reader"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
+        </activity>
 
         <service
             android:name=".service.RSSFeedService"
-            android:enabled="true"/>
+            android:enabled="true" />
 
         <provider
             android:name=".provider.RSSFeedProvider"
             android:authorities="ch.sbb.adiguzaf.rssreader.provider"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
     </application>
 
 </manifest>
